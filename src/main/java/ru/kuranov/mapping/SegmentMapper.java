@@ -13,5 +13,12 @@ public class SegmentMapper {
                 .rightPoint(segment.getRight())
                 .build();
     }
+
+    public Segment convertToSegment(SegmentDto segmentDto) {
+        return Segment.builder()
+                .left(segmentDto.getLeftPoint())
+                .right(segmentDto.getRightPoint())
+                .build();
+    }
 }
 

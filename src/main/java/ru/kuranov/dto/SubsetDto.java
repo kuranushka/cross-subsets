@@ -16,6 +16,6 @@ import java.util.List;
 @Getter
 public class SubsetDto {
 
-    private  List<Segment> segments;
+    private  List<SegmentDto> segmentDtoList;
 
 }

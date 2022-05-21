@@ -6,8 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.kuranov.dto.PointDto;
 import ru.kuranov.dto.SegmentDto;
-import ru.kuranov.entity.Segment;
-import ru.kuranov.entity.Subset;
+import ru.kuranov.dto.SubsetDto;
+import ru.kuranov.mapping.SubsetMapper;
 import ru.kuranov.resolver.FunctionResolver;
 import ru.kuranov.validator.Validator;
 
@@ -20,23 +20,24 @@ public class FunctionController {
 
     private final FunctionResolver resolver;
     private final Validator validator;
+    private final SubsetMapper mapper;
 
-    //TODO проверка всего и вся
+    //TODO проверка всего и вся и переписать на DTO
     @PostMapping(value = "/cross-subsets")
-    public ResponseEntity<?> findAllCrossSubsets(@RequestBody List<Subset> subsets) {
-        validator.validate(subsets);
+    public ResponseEntity<?> findAllCrossSubsets(@RequestBody List<SubsetDto> subsets) {
+        validator.validate(mapper.convertToSubsets(subsets));
 
-        List<SegmentDto> segments = resolver.findAllCrossSegments(subsets);
+        List<SegmentDto> segments = resolver.findAllCrossSegments(mapper.convertToSubsets(subsets));
         return new ResponseEntity<>(segments, HttpStatus.OK);
     }
 
 
     @PostMapping(value = "/nearest-point")
-    public ResponseEntity<?> findNearestPoint(@RequestBody List<Subset> subsets, @RequestParam Double x) {
-        validator.validate(subsets);
+    public ResponseEntity<?> findNearestPoint(@RequestBody List<SubsetDto> subsets, @RequestParam Double x) {
+        validator.validate(mapper.convertToSubsets(subsets));
         validator.validate(x);
 
-        PointDto point = resolver.findNearestPoint(subsets, x);
+        PointDto point = resolver.findNearestPoint(mapper.convertToSubsets(subsets), x);
         return new ResponseEntity<>(point, HttpStatus.OK);
     }
 
