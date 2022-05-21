@@ -5,15 +5,17 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
+import ru.kuranov.entity.Segment;
+
+import java.util.List;
 
 @Component
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Getter
-public class SegmentDto {
+public class SubsetDto {
 
-    private Double leftPoint;
-    private Double rightPoint;
+    private  List<Segment> segments;
 
 }

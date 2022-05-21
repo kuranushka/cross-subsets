@@ -1,30 +1,18 @@
 package ru.kuranov.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.RequiredArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
+@Getter
 public class Segment {
 
-    private final Double left;
-    private final Double right;
-
-    public Double getLeft() {
-        return left;
-    }
-
-    public Double getRight() {
-        return right;
-    }
-
-    @Override
-    public String toString() {
-        return "Segment{" +
-                "left=" + left +
-                ", right=" + right +
-                '}';
-    }
+    private Double left;
+    private Double right;
 }

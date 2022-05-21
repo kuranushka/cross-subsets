@@ -1,22 +1,16 @@
 package ru.kuranov.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@Service
-@RequiredArgsConstructor
+@Component
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
+@Getter
 public class PointDto {
 
-
-    private final Double point;
-
-    public Double getPoint() {
-        return point;
-    }
-
+    private Double point;
 
 }
