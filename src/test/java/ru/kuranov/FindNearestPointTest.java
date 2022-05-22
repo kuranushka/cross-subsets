@@ -38,8 +38,15 @@ public class FindNearestPointTest {
 
     @BeforeEach
     void init() {
-        SubsetDto subset1 = new SubsetDto(List.of(new SegmentDto(-Double.MAX_VALUE, 0d), new SegmentDto(10d, Double.MAX_VALUE)));
-        SubsetDto subset2 = new SubsetDto(List.of(new SegmentDto(-Double.MAX_VALUE, 15d)));
+        SubsetDto subset1 = new SubsetDto(
+                List.of(
+                        new SegmentDto(-Double.MAX_VALUE, 0d),
+                        new SegmentDto(10d, Double.MAX_VALUE)));
+
+        SubsetDto subset2 = new SubsetDto(
+                List.of(
+                        new SegmentDto(-Double.MAX_VALUE, 15d)));
+
         subs = List.of(subset1, subset2);
     }
 
