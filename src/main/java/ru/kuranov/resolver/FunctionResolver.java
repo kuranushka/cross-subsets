@@ -8,10 +8,7 @@ import ru.kuranov.entity.Segment;
 import ru.kuranov.entity.Subset;
 import ru.kuranov.mapping.SegmentMapper;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -25,15 +22,18 @@ public class FunctionResolver {
 
 
     // переменная для сохранения дистанции
-    Double distance = Double.MAX_VALUE;
-
+    Double distance = 0d;
 
     // переменная для сохранения ближайшей точки
-    Double nearPoint = 0D;
+    Double nearPoint = 0d;
 
+    Set<Double> nearestPointSet = new TreeSet<>();
 
 
     public PointDto findNearestPoint(List<Subset> subs, Double x) {
+
+        // коллекция для хранения расстояний от X до точек отрезков, key = расстояние, value = точка
+        Map<Double, Double> neaR = new TreeMap<>();
 
         // если подмножество в единственном экземпляре, то обрабатыаем отдельно
         if (subs.size() == 1) {
@@ -68,7 +68,7 @@ public class FunctionResolver {
         }
 
         // если среди точек пересекающих все подмножества есть 0.0 и X = 0.0, то возвращаем X
-        if (x.compareTo(0D) == 0 && crossPoints.contains(0D)) {
+        if (x.compareTo(0d) == 0 && crossPoints.contains(0d)) {
             return PointDto.builder()
                     .point(x)
                     .build();
@@ -83,24 +83,40 @@ public class FunctionResolver {
                         .point(x)
                         .build();
             } else {
+
                 // определяем расстояние до левой точки отрезка
-                if (Math.abs(segment.getLeft() - x) < distance) {
-                    nearPoint = segment.getLeft();
-                    distance = Math.abs(segment.getLeft() - x);
+                if (segment.getLeft().compareTo(x) < 0) {
+                    neaR.put(x - segment.getLeft(), segment.getLeft());
+                } else {
+                    neaR.put(segment.getLeft() - x, segment.getLeft());
                 }
 
+
                 // определяем расстояние до правой точки отрезка
-                if (Math.abs(segment.getRight() - x) < distance) {
-                    nearPoint = segment.getRight();
-                    distance = Math.abs(segment.getRight() - x);
+                if (segment.getRight().compareTo(x) < 0) {
+                    neaR.put(x - segment.getRight(), segment.getRight());
+                } else {
+                    neaR.put(segment.getRight() - x, segment.getRight());
                 }
             }
         }
+        neaR.remove(Double.NEGATIVE_INFINITY);
+        neaR.remove(Double.POSITIVE_INFINITY);
         return PointDto.builder()
-                .point(nearPoint)
+                .point(neaR.values().stream().findFirst().orElseThrow())
                 .build();
     }
 
+    private Double getNearestPoint(Set<Double> nearestPointSet, Double x) {
+        nearPoint = 0d;
+        for (Double point : nearestPointSet) {
+            if (distance.compareTo(Math.abs(point - x)) < 0) {
+                distance = Math.abs(point - x);
+                nearPoint = point;
+            }
+        }
+        return nearPoint;
+    }
 
 
     private PointDto handleSingleSubset(List<Subset> subs, Double x) {
@@ -115,8 +131,6 @@ public class FunctionResolver {
     }
 
 
-
-
     public List<SegmentDto> findAllCrossSegments(List<Subset> subs) {
 
         // извлечение и сортировка точек принадлежащих всем подмножествам
@@ -129,7 +143,6 @@ public class FunctionResolver {
                 .map(mapper::convertToSegmentDto)
                 .collect(Collectors.toList());
     }
-
 
 
     // поиск отрезков принадлежащих всем подмножествам
@@ -164,7 +177,6 @@ public class FunctionResolver {
     }
 
 
-
     // извлечение и сортировка точек принадлежащих всем подмножествам
     private TreeSet<Double> getCrossPoints(List<Subset> subs) {
 
@@ -190,7 +202,6 @@ public class FunctionResolver {
         }
         return sortedPoints;
     }
-
 
 
     // проверка принадлежит ли точка отрезку
