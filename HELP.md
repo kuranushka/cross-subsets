@@ -7,7 +7,7 @@ REST API запускается на 8111 порту.
 
 Запуск в Linux:
 
-1. Находясь в папке cross-subsets-master запустить в терминале команду "docker build --tag function ."
+1. Находясь в папке cross-subsets-master/cross-subsets-master запустить в терминале команду "docker build --tag function ."
 2. Находясь в этой же папке запустить в терминале команду "mvnw.cmd clean install"
 3. Находясь в этой же папке запустить в терминале команду "docker-compose up"
 
