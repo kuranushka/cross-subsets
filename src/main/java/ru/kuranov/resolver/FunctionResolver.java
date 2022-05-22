@@ -20,16 +20,7 @@ public class FunctionResolver {
 
     private final SegmentMapper mapper;
 
-
-    // переменная для сохранения дистанции
-    Double distance = 0d;
-
-    // переменная для сохранения ближайшей точки
-    Double nearPoint = 0d;
-
-    Set<Double> nearestPointSet = new TreeSet<>();
-
-
+    // извлекаем ближайшую точку, либо возвращаем Х, если он принадлежит отрезку принадлежащему всем подмножествам
     public PointDto findNearestPoint(List<Subset> subs, Double x) {
 
         // коллекция для хранения расстояний от X до точек отрезков, key = расстояние, value = точка
@@ -107,18 +98,7 @@ public class FunctionResolver {
                 .build();
     }
 
-    private Double getNearestPoint(Set<Double> nearestPointSet, Double x) {
-        nearPoint = 0d;
-        for (Double point : nearestPointSet) {
-            if (distance.compareTo(Math.abs(point - x)) < 0) {
-                distance = Math.abs(point - x);
-                nearPoint = point;
-            }
-        }
-        return nearPoint;
-    }
-
-
+    // обработка подмножества, если оно в единственном экземпляре
     private PointDto handleSingleSubset(List<Subset> subs, Double x) {
         for (Segment segment : subs.get(0).getSegments()) {
             if (isExistInSegment(segment, x)) {
@@ -130,7 +110,7 @@ public class FunctionResolver {
         throw new RuntimeException(NO_CROSS_SEGMENTS.getMessage());
     }
 
-
+    // извлекаем отрезки принадлежащие всем подмножествам
     public List<SegmentDto> findAllCrossSegments(List<Subset> subs) {
 
         // извлечение и сортировка точек принадлежащих всем подмножествам
