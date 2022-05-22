@@ -15,6 +15,14 @@ public class SegmentMapper {
     }
 
     public Segment convertToSegment(SegmentDto segmentDto) {
+
+        // если точки в отрезках перепутаны, меняем их местами
+        if (segmentDto.getLeftPoint().compareTo(segmentDto.getRightPoint()) > 0) {
+            return Segment.builder()
+                    .right(segmentDto.getLeftPoint())
+                    .left(segmentDto.getRightPoint())
+                    .build();
+        }
         return Segment.builder()
                 .left(segmentDto.getLeftPoint())
                 .right(segmentDto.getRightPoint())

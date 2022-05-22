@@ -1,6 +1,9 @@
 package ru.kuranov.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,6 +15,5 @@ import java.util.List;
 @Getter
 public class Subset {
 
-    private  List<Segment> segments;
-
+    private List<Segment> segments;
 }

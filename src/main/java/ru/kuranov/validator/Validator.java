@@ -15,20 +15,20 @@ import static ru.kuranov.message.Message.X_OUT_OF_RANGE;
 public class Validator {
 
 
-    // TODO проверить
+    // проверяем точки входящих подмножеств на NaN, Infinite
     public void validate(List<Subset> subsets) {
         boolean isValidSubs = subsets.stream()
                 .flatMap(subset -> subset.getSegments().stream())
                 .flatMap(segment -> Stream.of(segment.getLeft(), segment.getRight()))
                 .anyMatch(point -> !point.isNaN() || !point.isInfinite());
-        if(! isValidSubs) {
+        if (!isValidSubs) {
             throw new RuntimeException(POINTS_OUT_OF_RANGE.getMessage());
         }
     }
 
-    // TODO проверить
-    public void validate (Double x) {
-        if(!x.isNaN() && !x.isInfinite()) {
+    // проверяем Х на NaN и Infinite
+    public void validate(Double x) {
+        if (x.isNaN() || x.isInfinite()) {
             throw new RuntimeException(X_OUT_OF_RANGE.getMessage());
         }
     }

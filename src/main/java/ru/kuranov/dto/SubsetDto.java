@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.kuranov.entity.Segment;
 
 import java.util.List;
 
@@ -16,6 +15,6 @@ import java.util.List;
 @Getter
 public class SubsetDto {
 
-    private  List<SegmentDto> segmentDtoList;
+    private List<SegmentDto> segmentDtoList;
 
 }
