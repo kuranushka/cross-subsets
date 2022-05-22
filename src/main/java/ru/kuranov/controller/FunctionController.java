@@ -25,7 +25,7 @@ public class FunctionController {
 
     @Operation(
             summary = "Получить все отрезки принадлежащие всем подмножествам",
-            description = "ПЕРЕДВАЕМЫЕ ЗНАЧЕНИЯ ДОЛЖНЫ ПРИНАДЛЕЖАТЬ ДИАПОЗОНУ ОТ -1.7976931348623157E308 ДО 1.7976931348623157E308, ПРИ ЭТОМ НЕ БЫТЬ NaN И НЕ БЫТЬ INFINITE")
+            description = "ПЕРЕДАВАЕМЫЕ ЗНАЧЕНИЯ ДОЛЖНЫ ПРИНАДЛЕЖАТЬ ДИАПОЗОНУ ОТ -1.7976931348623157E308 ДО 1.7976931348623157E308, ПРИ ЭТОМ НЕ БЫТЬ NaN И НЕ БЫТЬ INFINITE")
     @PostMapping(value = "/cross-subsets")
     public ResponseEntity<?> findAllCrossSubsets(@RequestBody List<SubsetDto> subsets) {
 
